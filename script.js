@@ -38,6 +38,10 @@ function game() {
     let playerSelection;
     while (playerSelection === undefined) {
       playerSelection = prompt("Make a move!");
+      if (playerSelection === null) {
+        alert("Canceled");
+        return;
+      }
 
       // Check if player input is valid
       if (!MOVES.includes(playerSelection.toLowerCase())) {
@@ -45,6 +49,7 @@ function game() {
         playerSelection = undefined;
       }
     }
+
     const computerSelection = getComputerChoice();
 
     console.log("Player's move: " + playerSelection);
