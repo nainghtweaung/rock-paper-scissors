@@ -2,7 +2,7 @@ const MOVES = ["rock", "paper", "scissors"];
 
 let playerScore = 0;
 let computerScore = 0;
-const rounds = 3;
+const rounds = 5;
 
 function getComputerChoice() {
   return MOVES[Math.floor(Math.random() * MOVES.length)];
@@ -27,24 +27,55 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-function game(round) {
-  const playerSelection = prompt("Make a move!");
-  console.log("Player's move: " + playerSelection);
-  const computerSelection = getComputerChoice();
-  console.log("Computer's move: " + computerSelection);
+function game() {
+  let result;
+  // Play given number of rounds
+  for (let i = 0; i < rounds; i++) {
+    if (playerScore > rounds / 2 || computerScore > rounds / 2) {
+      break;
+    }
 
-  const result = playRound(playerSelection, computerSelection);
+    let playerSelection;
+    while (playerSelection === undefined) {
+      playerSelection = prompt("Make a move!");
 
-  if (result === 0) {
-    console.log("ties");
-  } else if (result === true) {
-    playerScore++;
-    console.log(`Player wins round ${round}!`);
+      // Check if player input is valid
+      if (!MOVES.includes(playerSelection.toLowerCase())) {
+        alert("Please enter a valid move.");
+        playerSelection = undefined;
+      }
+    }
+    const computerSelection = getComputerChoice();
+
+    console.log("Player's move: " + playerSelection);
+    console.log("Computer's move: " + computerSelection);
+
+    result = playRound(playerSelection, computerSelection);
+    if (result === 0) {
+      console.log(`Round ${i + 1}: A tie! Play again.\n`);
+      console.log("");
+      i--;
+    } else if (result === true) {
+      playerScore++;
+      console.log(`Round ${i + 1}: Player wins!`);
+      console.log("");
+    } else {
+      computerScore++;
+      console.log(`Round ${i + 1}: Computer wins!`);
+      console.log("");
+    }
+  }
+
+  if (playerScore > computerScore) {
+    console.log("🏆Player wins the game!🏆");
+  } else if (playerScore < computerScore) {
+    console.log("💀Computer wins the game!💀");
   } else {
-    computerScore++;
-    console.log(`Computer wins round ${round}!`);
+    console.log("The game is a tie!");
   }
 }
+
+game();
 
 console.log(playerScore);
 console.log(computerScore);
