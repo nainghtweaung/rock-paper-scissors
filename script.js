@@ -33,6 +33,7 @@ function updateResult(result) {
     return;
   } else if (computerPoint === 5) {
     displayResult("💀Computer wins the game!💀");
+    return;
   }
 
   if (result === 0) {
@@ -58,13 +59,23 @@ function updateScore() {
 const btnRock = document.querySelector(".rock");
 const btnPaper = document.querySelector(".paper");
 const btnScissors = document.querySelector(".scissors");
+const buttons = document.querySelectorAll("button");
 const displayMessage = document.querySelector(".result");
 const playerScore = document.querySelector(".playerScore");
 const computerScore = document.querySelector(".computerScore");
 
-btnRock.addEventListener("click", (event) => {
-  const move = event.target.textContent.toLowerCase();
-  let result = playRound(move);
-  updateResult(result);
-  updateScore();
-});
+buttons.forEach((btn) =>
+  btn.addEventListener("click", (event) => {
+    const move = event.target.textContent.toLowerCase();
+    let result = playRound(move);
+    updateResult(result);
+    updateScore();
+  })
+);
+
+// btnRock.addEventListener("click", (event) => {
+//   const move = event.target.textContent.toLowerCase();
+//   let result = playRound(move);
+//   updateResult(result);
+//   updateScore();
+// });
